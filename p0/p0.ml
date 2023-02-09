@@ -49,7 +49,7 @@ type 'a arbol_binario =
 
 let rec in_orden = function
     Vacio -> []
-  | Nodo (x, ni, nd) -> (in_orden ni) @ [x] @ (in_orden nd);;
+  | Nodo (x, ni, nd) -> (in_orden ni) @ (x::(in_orden nd));;
   (*val in_orden : 'a arbol_binario -> 'a list = <fun>*)
 
 
@@ -118,20 +118,40 @@ let union c1 (Conjunto l2) =
   let rec aux (Conjunto l1) = function 
       [] -> l1
     | h::t -> if pertenece h c1 then (aux c1 t) else h::(aux (Conjunto l1) t) 
-  in aux c1 l2;;  
+  in Conjunto (aux c1 l2);;  
   (*val union : 'a conjunto -> 'a conjunto -> 'a list = <fun>*)
 
+let interseccion c1 (Conjunto l2) =
+  let rec aux (Conjunto l1) = function 
+      [] -> []
+    | h::t -> if pertenece h c1 then h::(aux c1 t) else aux (Conjunto l1) t
+  in Conjunto (aux c1 l2);;
+  (*val interseccion : 'a conjunto -> 'a conjunto -> 'a conjunto = <fun>*)
+
+let diferencia (Conjunto l1) c2 = 
+  let rec aux (Conjunto l2) = function 
+      [] -> []
+    | h::t -> if pertenece h c2 then (aux c2 t) else h::(aux (Conjunto l2) t) 
+  in Conjunto (aux c2 l1);; 
+  (*val diferencia : 'a conjunto -> 'a conjunto -> 'a list = <fun>*)
+
+let rec incluido (Conjunto l1) c2 = match l1 with
+    [] -> true
+  | h::t -> if pertenece h c2 then incluido (Conjunto t) c2 else false;;
+  (*val incluido : 'a conjunto -> 'a conjunto -> bool = <fun>*)
+
+let igual2 c1 c2 = 
+  (diferencia c1 c2) = (diferencia c2 c1);;
+  (*val igual : 'a conjunto -> 'a conjunto -> bool = <fun>*)
+
+let producto_cartesiano (Conjunto l1) (Conjunto l2) = 
+  let rec aux l1 l2 l2og = match l1,l2 with
+      [],_ -> []
+    | (h::t),([]) -> aux t l2og l2og
+    | (h1::t1), (h2::t2) -> (h1,h2)::(aux l1 t2 l2og) 
+  in Conjunto (aux l1 l2 l2);;
+  (*val producto_cartesiano : 'a conjunto -> 'b conjunto -> ('a * 'b) conjunto = <fun>*)
 
 
-
-
-
-
-
-
-
-
-
-
-  
-let list_of_conjunto (Conjunto l) = l;
+let list_of_conjunto (Conjunto l) = l;;
+  (*val list_of_conjunto : 'a conjunto -> 'a list = <fun>*)

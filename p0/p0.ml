@@ -44,7 +44,11 @@ type 'a arbol_binario =
   Vacio
   | Nodo of 'a * 'a arbol_binario * 'a arbol_binario;;
 
-(*let t = Nodo(3,Nodo(2,Vacio,Vacio),Nodo(5,Nodo(4,Vacio,Vacio),Nodo(1,Vacio,Vacio)));;*)
+(*
+let t = Nodo(3,Nodo(2,Vacio,Vacio),Nodo(5,Nodo(4,Vacio,Vacio),Nodo(1,Vacio,Vacio)));;
+let t2 = Nodo(3,Nodo(2,Nodo(9,Nodo(0,Vacio,Vacio),Vacio),Vacio),Nodo(5,Nodo(4,Vacio,Vacio),Nodo(1,Vacio,Vacio)));;
+
+*)
 
 
 let rec in_orden = function
@@ -64,13 +68,14 @@ let rec post_orden = function
   | Nodo (x, ni, nd) -> (post_orden ni) @ (post_orden nd) @ [x];;
   (*val post_orden : 'a arbol_binario -> 'a list = <fun>*)
 
-(*
-let rec anchura t =  
-  let rec aux q = function
-    [] -> l
-  | Nodo(x,Vacio)   
-*)
-
+let anchura tree =
+    let rec aux l queue = match queue with
+        [] -> List.rev l
+      | Vacio::t -> aux l t
+      | Nodo (x, Vacio, Vacio)::t -> aux (x::l) t 
+      | Nodo (x, ni, nd)::t -> aux (x::l) (t @ [ni;nd])
+    in aux [] [tree];;
+    (*val anchura : 'a arbol_binario -> 'a list = <fun>*)
 
 (*----------------------------------------------------------------------------------------------*)
 (*Ejercicio 4: conjunto*)

@@ -1,0 +1,76 @@
+########## EJERCICIO 1 ##########
+
+función es_afne(automata):
+  para cada estado en el automata:
+    para cada transición en las transiciones del estado:
+      si el símbolo de entrada de la transición es epsilon:
+        devolver true
+  para cada estado en el autómata:
+    para cada transición en las transiciones del estado:
+      si el símbolo de entrada de la transición no es epsilon:
+        si el estado de destino tiene épsilon-transiciones:
+          devolver true
+  devolver false
+
+
+función es_afn(automata):
+  para cada estado en el automata:
+    para cada transición en las transiciones del estado:
+      si hay algúm símbolo de entrada duplicado en las transiciones del estado:
+        devolver true
+  devolver false
+
+
+funcion es_afd(automata):
+  simbolos_entrada_inicial = lista de símbolos de entrada de las transiciones del estado inicial del automata
+  estados_visitados = [estado inicial del automata]
+  para cada estado en estados_visitados:
+    transiciones_estado = lista de transiciones del estado en el automata
+    simbolos_entrada = lista de simbolos de entrada de las transiciones_estado
+    si hay algún símbolo de entrada duplicado en simbolos_entrada:
+      devuelve false
+    para cada símbolo de simbolos_entrada:
+      destino = estado de destino de la transición correcpondiente al símbolo
+      si el destino no es un estado del autómata:
+        devolver false
+      si el destino no está en estados_visitados:
+        añadir destino a estados_visitados
+  devolver true
+
+########## EJERCICIO 2 ##########
+
+Funcion equivalentes(automata1, automata2):
+    estados1 = estados del automata1 
+    estados_finales = estados finales del automata1
+    estados2 = estados del automata2
+    estados_finales2 = estados finales del automata2
+    alfabeto = alfabeto del automata1 y automata2
+    estados_visitados = conjunto vacio 
+    cola = [(estado_inicial1, estado_inicial2)]
+    Mientras cola no esté vacía:
+        (estado_actual1,estado_actual2) = extraer elemento de la cola 
+        Si (estado_actual1,estado_actual2) está en estados_visitados:
+            Continuar con el siguiente elemento de la cola
+        Si estado_actual1 es final y estado_actual2 no lo es:
+            Devolver false 
+        Si no: 
+            Añadir (estado_actual1,estado_actual2) a estados_visitados no
+            Para cada símbolo del alfabeto:
+                nuevo_estado1 = estado alcanzado desde el estado actual con el simbolo
+                nuevo_estado2 = estado alcanzado desde el estado actual con el simbolo
+                Añadir (nuevo_estado1,nuevo_estado2) a la cola
+        Cola vacia: true
+    end
+end;;
+
+Busqueda en anchura para simular los dos automatas en paralelo, leyendo una msima entrada, y comparar si los dos automatas
+llegan al mismo estado final. el algoritmo mantiene una cola de pares de eestados visitados, y los nuevos estados se añaden
+a la cola para ser procesados posteriormente 
+
+Si se llega a un par donde uno es final y el otro no, se puede concluir que los dos automatas no aceptan el mismo lenguaje y 
+se devuelve false. Si se llega al final de la simulación sin encontrar tal par de estados se devuelve true
+
+
+########## EJERCICIO 3 ##########
+
+Mirar la funcion en la libreria, entender que parte hace la especifica y la no especifica e ir quitando cosillas

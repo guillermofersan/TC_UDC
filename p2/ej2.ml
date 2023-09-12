@@ -35,13 +35,6 @@ let llenarfila1 cadena reglas = (* rellena la fila 1 de la matriz*)
   in aux [] cadena 
 ;;
 
-
-let siguiente_fila triangulo reglas = [];;
-(*Funcion sin implementar por falta de tiempo. El objetivo de esta funcion seria comprobar 
-  el triangulo y observar cual es la siguiente linea a rellenar y, despues, rellenarla
-  *)
-
-
  let cyk cadena (Gic(Conjunto nonter, Conjunto ter, Conjunto reglas, s_ini )) = 
   if (not (es_fnc (Gic(Conjunto nonter, Conjunto ter, Conjunto reglas, s_ini )))) || (cadena=[])
     then false 
